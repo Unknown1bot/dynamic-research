@@ -1,13 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -24,22 +22,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
-
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Research', href: '/research' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Contact', href: '/contact' }
+    { name: 'About', href: '#about' },
+    { name: 'Research', href: '#research' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' }
   ];
-
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
 
   return (
     <nav 
@@ -49,26 +37,23 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link 
-          to="/" 
+        <a 
+          href="#" 
           className="text-2xl font-bold tracking-tighter hover:text-primary transition-colors"
         >
           John.AI
-        </Link>
+        </a>
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">
           {navLinks.map(link => (
-            <Link 
+            <a 
               key={link.name} 
-              to={link.href}
-              className={cn(
-                "text-sm font-medium transition-colors",
-                isActive(link.href) ? "text-primary font-semibold" : "hover:text-primary"
-              )}
+              href={link.href}
+              className="link-hover text-sm font-medium"
             >
               {link.name}
-            </Link>
+            </a>
           ))}
         </div>
         
@@ -90,17 +75,14 @@ const Navbar = () => {
         )}
       >
         {navLinks.map(link => (
-          <Link 
+          <a 
             key={link.name} 
-            to={link.href}
-            className={cn(
-              "text-2xl font-medium transition-colors",
-              isActive(link.href) ? "text-primary font-semibold" : "hover:text-primary"
-            )}
+            href={link.href}
+            className="text-2xl font-medium link-hover"
             onClick={() => setIsOpen(false)}
           >
             {link.name}
-          </Link>
+          </a>
         ))}
       </div>
     </nav>

@@ -72,7 +72,8 @@ const ProjectsSection = () => {
             <ProjectCard 
               key={project.id} 
               project={project} 
-              className={`animate-fade-up animate-delay-${index * 100}`}
+              className="animate-fade-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
             />
           ))}
         </div>
