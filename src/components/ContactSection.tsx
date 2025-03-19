@@ -1,14 +1,43 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import SectionHeading from './SectionHeading';
-import { Mail, Github, Linkedin, Twitter, Calendar } from 'lucide-react';
+import { Mail, Github, Linkedin, Twitter, Calendar, Send } from 'lucide-react';
 
 const ContactSection = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In a real implementation, this would connect to an email service
-    console.log('Form submitted');
-    // You could add a toast notification here
+    
+    // Format the mail body with line breaks
+    const body = `
+Name: ${formData.name}
+Email: ${formData.email}
+
+Message:
+${formData.message}
+    `;
+    
+    // Create mailto link with form data
+    const mailtoLink = `mailto:contact@johnanderson.ai?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open default email client
+    window.location.href = mailtoLink;
+    
+    console.log('Form submitted and email client opened');
   };
 
   return (
@@ -95,6 +124,8 @@ const ContactSection = () => {
                 <input 
                   type="text" 
                   id="name" 
+                  value={formData.name}
+                  onChange={handleChange}
                   className="w-full px-4 py-2 rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-primary/20"
                   required
                 />
@@ -107,6 +138,8 @@ const ContactSection = () => {
                 <input 
                   type="email" 
                   id="email" 
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full px-4 py-2 rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-primary/20"
                   required
                 />
@@ -119,6 +152,8 @@ const ContactSection = () => {
                 <input 
                   type="text" 
                   id="subject" 
+                  value={formData.subject}
+                  onChange={handleChange}
                   className="w-full px-4 py-2 rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-primary/20"
                   required
                 />
@@ -131,6 +166,8 @@ const ContactSection = () => {
                 <textarea 
                   id="message" 
                   rows={4} 
+                  value={formData.message}
+                  onChange={handleChange}
                   className="w-full px-4 py-2 rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-primary/20"
                   required
                 ></textarea>
@@ -138,9 +175,10 @@ const ContactSection = () => {
               
               <button 
                 type="submit"
-                className="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium transition-all hover:shadow-md hover:shadow-primary/20"
+                className="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium transition-all hover:shadow-md hover:shadow-primary/20 flex items-center justify-center gap-2"
               >
-                Send Message
+                <span>Send Message</span>
+                <Send className="h-4 w-4" />
               </button>
             </form>
           </div>

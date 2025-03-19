@@ -38,6 +38,14 @@
   animation-delay: 300ms;
 }
 
+.animate-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animate-delay-500 {
+  animation-delay: 500ms;
+}
+
 /* Image loading effect */
 img {
   opacity: 0;
@@ -77,4 +85,3 @@ a, button {
 body.overflow-hidden {
   padding-right: var(--scrollbar-width, 0px);
 }
-
