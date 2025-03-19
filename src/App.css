@@ -77,3 +77,4 @@ a, button {
 body.overflow-hidden {
   padding-right: var(--scrollbar-width, 0px);
 }
+

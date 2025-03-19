@@ -92,9 +92,10 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div 
         className={cn(
-          'fixed inset-0 bg-white/95 backdrop-blur-md z-40 flex flex-col items-center justify-center space-y-8 transition-all duration-300 ease-in-out',
+          'fixed inset-0 top-0 left-0 w-full h-full bg-white/95 backdrop-blur-md z-40 flex flex-col items-center justify-center space-y-8 transition-all duration-300 ease-in-out',
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         )}
+        style={{ position: 'fixed' }}
       >
         {/* Close button for mobile menu */}
         <button 
