@@ -7,7 +7,29 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    // Toggle body scroll lock
+    if (!isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  };
+
+  // Cleanup function to ensure scroll is enabled when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  // Clean up scroll lock when menu closes
+  useEffect(() => {
+    if (!isOpen) {
+      document.body.style.overflow = '';
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,15 +93,27 @@ const Navbar = () => {
       <div 
         className={cn(
           'fixed inset-0 bg-white/95 backdrop-blur-md z-40 flex flex-col items-center justify-center space-y-8 transition-all duration-300 ease-in-out',
-          isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         )}
       >
+        {/* Close button for mobile menu */}
+        <button 
+          className="absolute top-6 right-6 focus:outline-none" 
+          onClick={toggleMenu}
+          aria-label="Close Menu"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
         {navLinks.map(link => (
           <a 
             key={link.name} 
             href={link.href}
             className="text-2xl font-medium link-hover"
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+              document.body.style.overflow = '';
+            }}
           >
             {link.name}
           </a>

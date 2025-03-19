@@ -52,3 +52,28 @@ img.loaded {
 a, button {
   transition: all 0.2s ease-in-out;
 }
+
+/* Link hover effect */
+.link-hover {
+  position: relative;
+}
+
+.link-hover::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.link-hover:hover::after {
+  width: 100%;
+}
+
+/* When body scroll is locked, ensure no jumping */
+body.overflow-hidden {
+  padding-right: var(--scrollbar-width, 0px);
+}
