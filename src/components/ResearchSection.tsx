@@ -110,8 +110,7 @@ const ResearchSection = () => {
             <ResearchCard 
               key={paper.id} 
               paper={paper} 
-              className="animate-fade-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`animate-fade-up animate-delay-${index * 100}`}
             />
           ))}
         </div>
